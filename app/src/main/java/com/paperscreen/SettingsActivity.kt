@@ -168,6 +168,8 @@ class SettingsActivity : Activity() {
         super.onResume()
         render()
         renderHome() // The default launcher may have changed elsewhere.
+        // The Quick Settings tile may have switched e-ink transitions.
+        findViewById<Switch>(R.id.transition_switch).isChecked = settings.transitionFlash
         nightTick.run() // Renders now, then every so often.
         if (startAfterServiceEnabled) {
             startAfterServiceEnabled = false
@@ -582,6 +584,19 @@ class SettingsActivity : Activity() {
             save = { settings.ghostOpacity = it },
             render = { valueText(R.id.ghost_opacity_value).text = getString(R.string.ghost_opacity_value, it) },
         )
+        val transitionStep = PaperSettings.TRANSITION_FLASH_STEP_MS
+        bindSlider(
+            R.id.transition_flash_seek,
+            min = PaperSettings.MIN_TRANSITION_FLASH_MS / transitionStep,
+            max = PaperSettings.MAX_TRANSITION_FLASH_MS / transitionStep,
+            initial = settings.transitionFlashMs / transitionStep,
+            default = PaperSettings.DEFAULT_TRANSITION_FLASH_MS / transitionStep,
+            valueId = R.id.transition_flash_value,
+            save = { settings.transitionFlashMs = it * transitionStep },
+            render = {
+                valueText(R.id.transition_flash_value).text = getString(R.string.transition_flash_value, it * transitionStep)
+            },
+        )
         val fadeStep = PaperSettings.GHOST_FADE_STEP_MS
         bindSlider(
             R.id.ghost_fade_seek,
@@ -740,6 +755,9 @@ class SettingsActivity : Activity() {
     private fun setUpFeatureToggles() {
         bindFeature(R.id.posterize_switch, R.id.posterize_options, settings.posterize) { settings.posterize = it }
         bindFeature(R.id.ghosting_switch, R.id.ghosting_options, settings.ghosting) { settings.ghosting = it }
+        bindFeature(R.id.transition_switch, R.id.transition_options, settings.transitionFlash) {
+            settings.transitionFlash = it
+        }
         bindFeature(R.id.full_refresh_switch, R.id.full_refresh_options, settings.fullRefresh) {
             settings.fullRefresh = it
         }

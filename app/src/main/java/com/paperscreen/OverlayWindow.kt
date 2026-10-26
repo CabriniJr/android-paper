@@ -103,7 +103,8 @@ class OverlayWindow(service: AccessibilityService) {
      * Draws the current frame at 1:1 screen pixels (over the paper colour, which only shows if
      * the window is ever up without a frame).
      * The frame bitmap is updated in place by the service (partial refreshes), which then
-     * calls [frameChanged]. A full refresh briefly draws it with inverted colours.
+     * calls [frameChanged]. A full refresh briefly draws it with inverted colours; with e-ink
+     * transitions on, so does each area a partial refresh rewrote, on its own.
      */
     class FrameView(context: Context) : View(context) {
 
@@ -117,6 +118,11 @@ class OverlayWindow(service: AccessibilityService) {
         /** Starting opacity (0–1) and fade time of partial-refresh ghosts. */
         var ghostAlpha = PaperSettings.DEFAULT_GHOST_OPACITY / 100f
         var ghostFadeMs = PaperSettings.DEFAULT_GHOST_FADE_MS.toLong()
+
+        /** Areas of the last partial refresh shown inverted until [flashEnd] (screen coordinates). */
+        private var flashes: List<Rect> = emptyList()
+        private var flashEnd = 0L
+        private val flashDst = Rect()
 
         private var frame: Bitmap? = null
         private var inverted = false
@@ -146,6 +152,7 @@ class OverlayWindow(service: AccessibilityService) {
             frame = bitmap
             inverted = false
             ghosts = emptyList()
+            flashes = emptyList()
             invalidate()
         }
 
@@ -160,16 +167,24 @@ class OverlayWindow(service: AccessibilityService) {
          * Redraws after the frame bitmap's pixels were changed in place. [changed] holds what
          * those regions showed before; it lingers faintly and fades out, the way a real e-ink
          * partial refresh leaves a brief trail of the previous image.
+         *
+         * With [flashMs] > 0, the [flashed] areas first show the new content inverted for that
+         * long, the way an e-ink panel drives the pixels it rewrites through their opposite
+         * before they settle; the ghost trail starts once they have.
          */
-        fun frameChanged(changed: List<Ghost> = emptyList()) {
+        fun frameChanged(changed: List<Ghost> = emptyList(), flashed: List<Rect> = emptyList(), flashMs: Long = 0L) {
+            val now = SystemClock.uptimeMillis()
+            flashes = if (flashMs > 0) flashed else emptyList()
+            flashEnd = now + flashMs
             ghosts = changed
-            ghostStart = SystemClock.uptimeMillis()
+            ghostStart = if (flashes.isEmpty()) now else flashEnd
             invalidate()
         }
 
         fun setInverted(invert: Boolean) {
             inverted = invert
             ghosts = emptyList()
+            flashes = emptyList()
             invalidate()
         }
 
@@ -184,6 +199,7 @@ class OverlayWindow(service: AccessibilityService) {
                     -location[1].toFloat(),
                     if (inverted) invertPaint else paint,
                 )
+                drawFlashes(canvas, bitmap)
                 drawGhosts(canvas)
             }
             // Last, so nothing is drawn over them: the real window beneath shows through.
@@ -198,9 +214,28 @@ class OverlayWindow(service: AccessibilityService) {
             }
         }
 
+        private fun drawFlashes(canvas: Canvas, bitmap: Bitmap) {
+            if (flashes.isEmpty()) return
+            val left = flashEnd - SystemClock.uptimeMillis()
+            if (left <= 0) {
+                flashes = emptyList()
+                return
+            }
+            for (area in flashes) {
+                flashDst.set(area)
+                flashDst.offset(-location[0], -location[1])
+                canvas.drawBitmap(bitmap, area, flashDst, invertPaint)
+            }
+            // One redraw when the flash is over (which also starts the ghost trail).
+            postInvalidateDelayed(left)
+        }
+
         private fun drawGhosts(canvas: Canvas) {
             if (ghosts.isEmpty()) return
-            val t = (SystemClock.uptimeMillis() - ghostStart) / ghostFadeMs.toFloat()
+            val now = SystemClock.uptimeMillis()
+            // Still flashing: the trail waits, and the flash schedules the next redraw.
+            if (now < ghostStart) return
+            val t = (now - ghostStart) / ghostFadeMs.toFloat()
             if (t >= 1f) {
                 ghosts = emptyList()
                 return

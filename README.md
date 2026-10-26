@@ -49,6 +49,13 @@ Each refresh (`PaperScreenAccessibilityService.beginRefresh`):
      leaves, and it makes the refreshed area visible. Without it, rewriting only the changed
      pixels looks identical to replacing the whole frame, since the unchanged pixels keep
      their values either way.
+     With **E-ink transitions** on (off by default), each changed band first shows the new
+     content with inverted colours for the transition flash (50–300 ms, default 120 ms), then
+     settles, like the pixels of a real panel being driven through their opposite before
+     they land. The ghost trail starts once the flash is over. It can also be switched from a
+     **Quick Settings tile** ("E-ink transitions"; add it from the shade's edit mode), so you
+     can turn it on and off on the phone without opening the app. The first frame after
+     starting, unlocking or a secure app never flashes.
    - **Full refresh** (when on; every *N* partial refreshes, 10–100, default 50): the new
      frame is shown with inverted colours for the flash duration (150–600 ms, default
      350 ms), then normally. This mimics an e-ink page turn clearing its ghosts. The first
@@ -93,7 +100,8 @@ hairlines and labelled with small, letterspaced headers:
 - **Header:** the master switch, with a live one-line summary underneath, e.g.
   "Filtering active · Standard · 16 greys · Warmth 20".
 - **Display:** Warmth, Contrast, and Posterization (with its grey levels).
-- **Refresh:** speed presets, Refresh on change, Ghosting (opacity, fade) and Full refresh
+- **Refresh:** speed presets, Refresh on change, Ghosting (opacity, fade), E-ink transitions
+  (flash duration) and Full refresh
   (interval, flash duration).
 - **Night warmth** and **Home screen**, as described below.
 - **Footer:** a full-width *Hold to preview* button, *About PaperScreen* (version and a

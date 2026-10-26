@@ -108,6 +108,22 @@ class PaperSettings(context: Context) {
         get() = prefs.getInt(KEY_GHOST_FADE, DEFAULT_GHOST_FADE_MS).coerceIn(MIN_GHOST_FADE_MS, MAX_GHOST_FADE_MS)
         set(value) = prefs.edit().putInt(KEY_GHOST_FADE, value.coerceIn(MIN_GHOST_FADE_MS, MAX_GHOST_FADE_MS)).apply()
 
+    /**
+     * E-ink transitions: each area a partial refresh rewrites first flashes inverted, then
+     * settles on the new content, like an e-ink panel driving its pixels through a waveform.
+     */
+    var transitionFlash: Boolean
+        get() = prefs.getBoolean(KEY_TRANSITION_FLASH, false)
+        set(value) = prefs.edit().putBoolean(KEY_TRANSITION_FLASH, value).apply()
+
+    /** How long a changed area shows inverted before settling. */
+    var transitionFlashMs: Int
+        get() = prefs.getInt(KEY_TRANSITION_FLASH_MS, DEFAULT_TRANSITION_FLASH_MS)
+            .coerceIn(MIN_TRANSITION_FLASH_MS, MAX_TRANSITION_FLASH_MS)
+        set(value) = prefs.edit()
+            .putInt(KEY_TRANSITION_FLASH_MS, value.coerceIn(MIN_TRANSITION_FLASH_MS, MAX_TRANSITION_FLASH_MS))
+            .apply()
+
     /** Periodic inverted full refreshes; when off, every refresh is partial. */
     var fullRefresh: Boolean
         get() = prefs.getBoolean(KEY_FULL_REFRESH, true)
@@ -217,6 +233,8 @@ class PaperSettings(context: Context) {
         const val KEY_GHOSTING = "ghosting"
         const val KEY_GHOST_OPACITY = "ghost_opacity"
         const val KEY_GHOST_FADE = "ghost_fade_ms"
+        const val KEY_TRANSITION_FLASH = "transition_flash"
+        const val KEY_TRANSITION_FLASH_MS = "transition_flash_ms"
         const val KEY_FULL_REFRESH = "full_refresh"
         const val KEY_FLASH_DURATION = "flash_duration_ms"
         const val KEY_NIGHT_WARMTH = "night_warmth"
@@ -244,7 +262,7 @@ class PaperSettings(context: Context) {
         private val RESETTABLE_KEYS = listOf(
             KEY_PRESET, KEY_CUSTOM_INTERVAL, KEY_WARMTH, KEY_CONTRAST, KEY_LEVELS, KEY_POSTERIZE,
             KEY_ON_CHANGE, KEY_GHOSTING, KEY_GHOST_OPACITY, KEY_GHOST_FADE, KEY_FULL_REFRESH,
-            KEY_FULL_REFRESH_EVERY, KEY_FLASH_DURATION,
+            KEY_FULL_REFRESH_EVERY, KEY_FLASH_DURATION, KEY_TRANSITION_FLASH, KEY_TRANSITION_FLASH_MS,
             KEY_NIGHT_WARMTH, KEY_NIGHT_SCHEDULE, KEY_NIGHT_START, KEY_NIGHT_END, KEY_DAY_WARMTH,
             KEY_NIGHT_WARMTH_LEVEL, KEY_NIGHT_TRANSITION,
             KEY_CLOCK_24H, KEY_CLOCK_SIZE, KEY_SHOW_DATE, KEY_SHOW_SECONDS, KEY_HOME_FONT,
@@ -279,6 +297,11 @@ class PaperSettings(context: Context) {
         const val MAX_FLASH_MS = 600
         const val FLASH_STEP_MS = 25
         const val DEFAULT_FLASH_MS = 350
+
+        const val MIN_TRANSITION_FLASH_MS = 50
+        const val MAX_TRANSITION_FLASH_MS = 300
+        const val TRANSITION_FLASH_STEP_MS = 10
+        const val DEFAULT_TRANSITION_FLASH_MS = 120
 
         const val MIN_FULL_REFRESH_EVERY = 10
         const val MAX_FULL_REFRESH_EVERY = 100

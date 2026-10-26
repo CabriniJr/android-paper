@@ -65,6 +65,11 @@
     <string name="ghost_opacity_value">%1$d%%</string>
     <string name="ghost_fade">Fade duration</string>
     <string name="ghost_fade_value">%1$d ms</string>
+    <string name="transition_flash">E-ink transitions</string>
+    <string name="transition_flash_hint">Each area a partial refresh rewrites flashes inverted for a moment before it settles, like the pixels of a real e-ink panel. Also in Quick Settings.</string>
+    <string name="transition_flash_duration">Transition flash</string>
+    <string name="transition_flash_value">%1$d ms</string>
+    <string name="tile_transition_flash">E-ink transitions</string>
     <string name="full_refresh">Full refresh</string>
     <string name="full_refresh_hint">Every so often the whole screen flashes inverted to clear leftovers, like an e-ink page turn. Off makes every refresh partial.</string>
     <string name="flash_duration">Flash duration</string>

@@ -42,7 +42,8 @@ import kotlin.math.min
  *
  * - **Partial refresh** (usual): the overlay keeps showing the old frame while the new one is
  *   captured and filtered in the background; then only the pixels that changed are written
- *   into it. No flash; static areas never change.
+ *   into it. Static areas never change. With e-ink transitions on, each rewritten area
+ *   briefly flashes inverted before it settles, like the waveform an e-ink panel drives.
  * - **Full refresh** (every N partial refreshes, and for the first frame): the new frame is
  *   shown with inverted colours for the flash duration (~350 ms), then normally — e-ink's
  *   ghosting-clear cycle. Can be turned off, making every refresh partial.
@@ -160,6 +161,8 @@ class PaperScreenAccessibilityService : AccessibilityService(), WindowCapturer.L
     private var fullRefreshEvery = PaperSettings.DEFAULT_FULL_REFRESH_EVERY
     private var flashMs = PaperSettings.DEFAULT_FLASH_MS.toLong()
     private var ghosting = true
+    private var transitionFlash = false
+    private var transitionFlashMs = PaperSettings.DEFAULT_TRANSITION_FLASH_MS.toLong()
     private var scheduledAt = NOT_SCHEDULED
     private val refreshRunnable = Runnable {
         scheduledAt = NOT_SCHEDULED
@@ -427,14 +430,21 @@ class PaperScreenAccessibilityService : AccessibilityService(), WindowCapturer.L
                 finishRefresh(changed = true)
             }, flashMs)
         } else {
-            // Partial refresh: only the changed pixels were written (ghosting, if on).
+            // Partial refresh: only the changed pixels were written (ghosting, if on), and
+            // with e-ink transitions they flash inverted first.
             partialsSinceFull++
-            view.frameChanged(applied.ghosts)
+            val flash = transitionFlash && !applied.firstFrame && !quiet
+            view.frameChanged(applied.ghosts, applied.areas, if (flash) transitionFlashMs else 0L)
             finishRefresh(changed = true)
         }
     }
 
-    private class Applied(val firstFrame: Boolean, val ghosts: List<OverlayWindow.FrameView.Ghost>)
+    private class Applied(
+        val firstFrame: Boolean,
+        val ghosts: List<OverlayWindow.FrameView.Ghost>,
+        /** The rewritten areas, in screen coordinates. */
+        val areas: List<Rect>,
+    )
 
     /** Writes [update] into the frame bitmap (creating it for a first frame). */
     private fun applyUpdate(update: WindowCapturer.Update, withGhosts: Boolean): Applied {
@@ -455,7 +465,8 @@ class PaperScreenAccessibilityService : AccessibilityService(), WindowCapturer.L
             )
         }
         update.applyTo(bitmap)
-        return Applied(firstFrame, ghosts)
+        val areas = update.bands.map { Rect(it.left, it.top, it.left + it.width, it.top + it.height) }
+        return Applied(firstFrame, ghosts, areas)
     }
 
     /** `adb logcat -s PaperScreen` shows how much of the screen each refresh rewrote. */
@@ -775,6 +786,8 @@ class PaperScreenAccessibilityService : AccessibilityService(), WindowCapturer.L
         fullRefreshEvery = settings.fullRefreshEvery
         flashMs = settings.flashDurationMs.toLong()
         ghosting = settings.ghosting
+        transitionFlash = settings.transitionFlash
+        transitionFlashMs = settings.transitionFlashMs.toLong()
         applyGhostStyle()
     }
 
@@ -902,6 +915,7 @@ class PaperScreenAccessibilityService : AccessibilityService(), WindowCapturer.L
             }
             PaperSettings.KEY_FULL_REFRESH, PaperSettings.KEY_FULL_REFRESH_EVERY, PaperSettings.KEY_FLASH_DURATION,
             PaperSettings.KEY_GHOSTING, PaperSettings.KEY_GHOST_OPACITY, PaperSettings.KEY_GHOST_FADE,
+            PaperSettings.KEY_TRANSITION_FLASH, PaperSettings.KEY_TRANSITION_FLASH_MS,
             -> readRefreshStyle()
         }
     }

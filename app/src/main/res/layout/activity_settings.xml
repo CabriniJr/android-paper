@@ -260,6 +260,38 @@
         </LinearLayout>
 
         <Switch
+            android:id="@+id/transition_switch"
+            style="@style/FeatureSwitch"
+            android:text="@string/transition_flash" />
+
+        <TextView
+            style="@style/Hint"
+            android:text="@string/transition_flash_hint" />
+
+        <!-- Sub-settings: shown only while the switch above is on. -->
+        <LinearLayout
+            android:id="@+id/transition_options"
+            style="@style/FeatureOptions">
+
+                <LinearLayout style="@style/SliderRow">
+
+                    <TextView
+                        style="@style/SectionLabel"
+                        android:labelFor="@id/transition_flash_seek"
+                        android:text="@string/transition_flash_duration" />
+
+                    <TextView
+                        android:id="@+id/transition_flash_value"
+                        style="@style/SectionValue" />
+                </LinearLayout>
+
+                <SeekBar
+                    android:id="@+id/transition_flash_seek"
+                    style="@style/Slider" />
+
+        </LinearLayout>
+
+        <Switch
             android:id="@+id/full_refresh_switch"
             style="@style/FeatureSwitch"
             android:text="@string/full_refresh" />

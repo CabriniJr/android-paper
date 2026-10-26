@@ -70,6 +70,22 @@
                 android:resource="@xml/accessibility_service_config" />
         </service>
 
+        <!-- Quick Settings tile for e-ink transitions; only System UI can bind it. -->
+        <service
+            android:name=".TransitionTileService"
+            android:exported="true"
+            android:icon="@drawable/ic_notification"
+            android:label="@string/tile_transition_flash"
+            android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.quicksettings.TOGGLEABLE_TILE"
+                android:value="true" />
+        </service>
+
         <receiver
             android:name=".NotificationActionReceiver"
             android:exported="false" />
