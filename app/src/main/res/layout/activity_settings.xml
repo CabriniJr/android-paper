@@ -219,21 +219,6 @@
 
         <TextView
             style="@style/Header"
-            android:text="@string/section_home" />
-
-        <TextView
-            style="@style/Hint"
-            android:text="@string/home_hint" />
-
-        <Button
-            android:id="@+id/use_as_home"
-            style="?android:attr/buttonBarButtonStyle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/use_as_home" />
-
-        <TextView
-            style="@style/Header"
             android:text="@string/section_shortcuts" />
 
         <TextView

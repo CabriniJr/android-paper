@@ -1,12 +1,11 @@
 # PaperScreen
 
-Turns an Android phone into a calm, good "dumb phone": it looks like e-ink, opens on a page
-of words instead of a grid of icons, and keeps short videos and the apps you choose out of
-reach. Three independent parts:
+Turns an Android phone into a calm, good "dumb phone": it looks like e-ink and keeps short
+videos and the apps you choose out of reach. Pair it with a minimal launcher of your choice
+(e.g. Niagara). Two independent parts:
 
 - **Paper mode** – the e-ink look (below).
 - **Focus** – blocks short videos and chosen apps.
-- **Home screen** – a minimal, text-only launcher.
 
 ## Paper mode
 
@@ -45,7 +44,7 @@ blocked) does two things:
   full-screen player shows, so search, messages and normal videos keep working, and treats
   short-video-only apps (TikTok, TikTok Lite, Kwai) as blocked apps. The players are found by
   view id (`FocusRules.SHORT_VIDEO_VIEWS`); if an app update renames them, update that list.
-- **Blocked apps** (picked in settings, or long-press an app on the home screen): opening one
+- **Blocked apps** (picked in settings): opening one
   brings up a pause screen instead – "What did you open it for?" – with *Back to home*, and
   *Use it for N minutes* (1–15, default 5) only after a 10-second wait. When the time runs
   out, the pause screen returns at the app's next change.
@@ -53,14 +52,6 @@ blocked) does two things:
 It stays light: the system only delivers events from the watched apps, coalesced to one per
 type every 300 ms, and window content is only queried inside YouTube and Instagram. It's
 friction, not a lock: everything can be undone from the settings page.
-
-## Home screen
-
-`HomeActivity`, chosen from *Use as home screen*: the time and date (`TextClock`, no code
-running), up to ten favourite apps as words, and *All apps*, a searchable list (accents and
-case ignored, Go opens the top result). Long-press a favourite to move or remove it; long-press
-any app to add it to the home screen, block or unblock it, or open its app info. Blocked apps
-are marked. No icons, badges, widgets or wallpaper. Back and Home return to the home page.
 
 ## Toggling paper mode
 
@@ -92,7 +83,7 @@ from the run's *Artifacts*. Locally (JDK 17 and an Android SDK with platform 34)
 
 ```sh
 ./gradlew assembleRelease      # app/build/outputs/apk/release/app-release.apk (minified, ~tens of KB)
-./gradlew testDebugUnitTest    # SystemTweaks, FocusRules, Favourites
+./gradlew testDebugUnitTest    # SystemTweaks, FocusRules
 ```
 
 The release build is signed with the debug key so it installs directly; use your own key
@@ -113,7 +104,7 @@ before distributing it. No libraries: framework APIs and the Kotlin stdlib only.
 | `FocusRules.kt` | What to block and how (pure, unit-tested) |
 | `FocusService.kt` | Focus blocking |
 | `PauseActivity.kt` / `Unlocks.kt` | The pause screen, and apps let through for a while |
-| `HomeActivity.kt` / `AppCatalog.kt` / `Favourites.kt` | The home screen |
+| `AppCatalog.kt` | The launchable apps, for picking which to block |
 
 ## Limitations
 

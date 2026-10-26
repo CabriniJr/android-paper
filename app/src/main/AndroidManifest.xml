@@ -10,7 +10,7 @@
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
-    <!-- Package visibility (not a permission): lets the home screen and the blocker see launchable apps. -->
+    <!-- Package visibility (not a permission): lets the blocker list and name launchable apps. -->
     <queries>
         <intent>
             <action android:name="android.intent.action.MAIN" />
@@ -45,25 +45,6 @@
                 android:resource="@xml/shortcuts" />
         </activity>
 
-        <!-- The optional minimal home screen; chosen as the default home app from settings. -->
-        <activity
-            android:name=".HomeActivity"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode"
-            android:excludeFromRecents="true"
-            android:exported="true"
-            android:launchMode="singleTask"
-            android:stateNotNeeded="true"
-            android:taskAffinity=""
-            android:theme="@style/Theme.PaperScreen.Home"
-            android:windowSoftInputMode="adjustResize|stateHidden">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-        </activity>
-
         <!-- Shown instead of a blocked app; its own task, so finishing returns to the app. -->
         <activity
             android:name=".PauseActivity"
@@ -71,7 +52,7 @@
             android:exported="false"
             android:launchMode="singleInstance"
             android:taskAffinity=""
-            android:theme="@style/Theme.PaperScreen.Home" />
+            android:theme="@style/Theme.PaperScreen.Page" />
 
         <!-- Toggles and closes; the target of the launcher shortcut. -->
         <activity

@@ -59,11 +59,6 @@ class PaperSettings(context: Context) {
         get() = prefs.getInt(KEY_UNLOCK_MINUTES, DEFAULT_UNLOCK_MINUTES).coerceIn(MIN_UNLOCK_MINUTES, MAX_UNLOCK_MINUTES)
         set(value) = prefs.edit().putInt(KEY_UNLOCK_MINUTES, value.coerceIn(MIN_UNLOCK_MINUTES, MAX_UNLOCK_MINUTES)).apply()
 
-    /** Home screen favourites, in order, as flattened ComponentNames. */
-    var favourites: List<String>
-        get() = Favourites.decode(prefs.getString(KEY_FAVOURITES, null))
-        set(value) = prefs.edit().putString(KEY_FAVOURITES, Favourites.encode(value)).apply()
-
     /**
      * The original system values paper mode took over, as [SystemTweaks.encode]d. Written
      * synchronously: losing them would leave the phone greyscale with nothing to restore.
@@ -89,7 +84,6 @@ class PaperSettings(context: Context) {
         const val KEY_BLOCK_SHORTS = "block_shorts"
         const val KEY_BLOCKED_APPS = "blocked_apps"
         const val KEY_UNLOCK_MINUTES = "unlock_minutes"
-        const val KEY_FAVOURITES = "favourites"
 
         const val DEFAULT_WARMTH = 40
 
