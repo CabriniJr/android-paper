@@ -3,6 +3,23 @@
     <!-- The system's own theme (light or dark), so the page looks like part of Settings. -->
     <style name="Theme.PaperScreen" parent="@android:style/Theme.DeviceDefault.DayNight" />
 
+    <!-- Home and pause screens: always a light page with dark serif type, whatever the theme. -->
+    <style name="Theme.PaperScreen.Home" parent="@android:style/Theme.DeviceDefault.Light.NoActionBar">
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:windowShowWallpaper">false</item>
+        <item name="android:statusBarColor">@android:color/white</item>
+        <item name="android:navigationBarColor">@android:color/white</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+        <item name="android:colorAccent">@color/home_ink</item>
+        <item name="android:textColorPrimary">@color/home_ink</item>
+    </style>
+
+    <style name="HomeText">
+        <item name="android:fontFamily">serif</item>
+        <item name="android:textColor">@color/home_ink</item>
+    </style>
+
     <style name="MasterSwitch">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>

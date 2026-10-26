@@ -174,6 +174,66 @@
 
         <TextView
             style="@style/Header"
+            android:text="@string/section_focus" />
+
+        <Switch
+            android:id="@+id/shorts_switch"
+            style="@style/Option"
+            android:text="@string/block_shorts" />
+
+        <TextView
+            style="@style/Hint"
+            android:text="@string/block_shorts_hint" />
+
+        <Button
+            android:id="@+id/choose_blocked"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/choose_blocked" />
+
+        <TextView
+            android:id="@+id/blocked_summary"
+            style="@style/Hint" />
+
+        <LinearLayout style="@style/SliderRow">
+
+            <TextView
+                style="@style/Label"
+                android:labelFor="@id/unlock_seek"
+                android:text="@string/unlock_time" />
+
+            <TextView
+                android:id="@+id/unlock_value"
+                style="@style/Value" />
+        </LinearLayout>
+
+        <SeekBar
+            android:id="@+id/unlock_seek"
+            style="@style/Slider" />
+
+        <TextView
+            style="@style/Hint"
+            android:text="@string/unlock_hint" />
+
+        <TextView
+            style="@style/Header"
+            android:text="@string/section_home" />
+
+        <TextView
+            style="@style/Hint"
+            android:text="@string/home_hint" />
+
+        <Button
+            android:id="@+id/use_as_home"
+            style="?android:attr/buttonBarButtonStyle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/use_as_home" />
+
+        <TextView
+            style="@style/Header"
             android:text="@string/section_shortcuts" />
 
         <TextView

@@ -1,13 +1,17 @@
 package com.paperscreen
 
 import android.app.Activity
+import android.app.AlertDialog
+import android.app.role.RoleManager
 import android.app.StatusBarManager
 import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.ComponentName
+import android.content.Intent
 import android.graphics.drawable.Icon
 import android.os.Build
 import android.os.Bundle
+import android.provider.Settings
 import android.view.View
 import android.widget.Button
 import android.widget.SeekBar
@@ -65,6 +69,15 @@ class SettingsActivity : Activity() {
             settings.flashMs, { settings.flashMs = it },
         ) { getString(R.string.milliseconds, it) }
 
+        bindOption(R.id.shorts_switch, null, settings.blockShorts) { settings.blockShorts = it }
+        findViewById<Button>(R.id.choose_blocked).setOnClickListener { chooseBlockedApps() }
+        bindSlider(
+            R.id.unlock_seek, R.id.unlock_value,
+            PaperSettings.MIN_UNLOCK_MINUTES, PaperSettings.MAX_UNLOCK_MINUTES, 1,
+            settings.unlockMinutes, { settings.unlockMinutes = it },
+        ) { resources.getQuantityString(R.plurals.minutes, it, it) }
+        findViewById<Button>(R.id.use_as_home).setOnClickListener { useAsHome() }
+
         val addTile = findViewById<Button>(R.id.add_tile)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             addTile.setOnClickListener { requestTile() }
@@ -91,6 +104,49 @@ class SettingsActivity : Activity() {
                 else -> R.string.status_off
             },
         )
+        renderBlocked()
+        findViewById<Button>(R.id.use_as_home).setText(
+            if (isHome()) R.string.change_home else R.string.use_as_home,
+        )
+    }
+
+    private fun renderBlocked() {
+        val blocked = settings.blockedApps
+        val names = AppCatalog.load(this).filter { it.pkg in blocked }.map { it.label }
+        findViewById<TextView>(R.id.blocked_summary).text =
+            if (names.isEmpty()) getString(R.string.no_blocked_apps) else names.joinToString(", ")
+    }
+
+    /** Pick the apps that get the pause screen. */
+    private fun chooseBlockedApps() {
+        val apps = AppCatalog.load(this).distinctBy { it.pkg }
+        val chosen = settings.blockedApps.toMutableSet()
+        val checked = apps.map { it.pkg in chosen }.toBooleanArray()
+        AlertDialog.Builder(this)
+            .setTitle(R.string.choose_blocked)
+            .setMultiChoiceItems(apps.map { it.label }.toTypedArray(), checked) { _, which, isChecked ->
+                if (isChecked) chosen += apps[which].pkg else chosen -= apps[which].pkg
+            }
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                settings.blockedApps = chosen
+                if (!mode.sync()) Toast.makeText(this, R.string.needs_setup, Toast.LENGTH_SHORT).show()
+                renderBlocked()
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
+    }
+
+    private fun isHome(): Boolean = getSystemService(RoleManager::class.java).isRoleHeld(RoleManager.ROLE_HOME)
+
+    /** Asks to become the home app, or opens the system's picker to switch away. */
+    private fun useAsHome() {
+        val roles = getSystemService(RoleManager::class.java)
+        if (roles.isRoleHeld(RoleManager.ROLE_HOME)) {
+            startActivity(Intent(Settings.ACTION_HOME_SETTINGS))
+        } else {
+            @Suppress("DEPRECATION") // The result isn't needed: onResume re-reads the role.
+            startActivityForResult(roles.createRequestRoleIntent(RoleManager.ROLE_HOME), 0)
+        }
     }
 
     /** A switch for an option, showing its sub-settings only while on. */

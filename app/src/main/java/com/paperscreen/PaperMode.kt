@@ -58,7 +58,7 @@ class PaperMode(context: Context) {
         return try {
             val originals = SystemTweaks.apply(store, want, SystemTweaks.decode(settings.originals))
             settings.originals = SystemTweaks.encode(originals)
-            syncPageTurnService()
+            syncServices()
             true
         } catch (e: SecurityException) {
             Log.w(TAG, "couldn't write the display settings", e)
@@ -90,27 +90,29 @@ class PaperMode(context: Context) {
     }
 
     /**
-     * The page-turn flash needs PaperScreen's accessibility service. With the permission, it's
-     * switched on and off with the option, so there's no trip to Accessibility settings, and
-     * nothing at all runs while the flash isn't wanted.
+     * The page-turn flash and focus blocking each need an accessibility service of their own.
+     * With the permission, they're switched on and off with their options, so there's no trip
+     * to Accessibility settings, and neither runs at all while it isn't wanted.
      */
-    private fun syncPageTurnService() {
+    private fun syncServices() {
         val resolver = app.contentResolver
-        val ours = ComponentName(app, PageTurnService::class.java).flattenToString()
-        val current = Settings.Secure.getString(resolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-            .orEmpty().split(':').filter { it.isNotEmpty() }
-        val wanted = settings.enabled && settings.pageFlash
-        val updated = if (wanted) (current + ours).distinct() else current - ours
+        val current = enabledServices()
+        val wanted = mapOf(
+            name(PageTurnService::class.java) to (settings.enabled && settings.pageFlash),
+            name(FocusService::class.java) to
+                FocusRules.watchedPackages(settings.blockedApps, settings.blockShorts).isNotEmpty(),
+        )
+        val updated = current.filter { wanted[it] != false } + wanted.filter { it.value && it.key !in current }.keys
         if (updated == current) return
         Settings.Secure.putString(resolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES, updated.joinToString(":"))
         if (updated.isNotEmpty()) Settings.Secure.putString(resolver, Settings.Secure.ACCESSIBILITY_ENABLED, "1")
     }
 
-    fun isPageTurnServiceOn(): Boolean {
-        val ours = ComponentName(app, PageTurnService::class.java).flattenToString()
-        return Settings.Secure.getString(app.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
-            .orEmpty().split(':').contains(ours)
-    }
+    private fun name(service: Class<*>) = ComponentName(app, service).flattenToString()
+
+    private fun enabledServices(): List<String> =
+        Settings.Secure.getString(app.contentResolver, Settings.Secure.ENABLED_ACCESSIBILITY_SERVICES)
+            .orEmpty().split(':').filter { it.isNotEmpty() }
 
     companion object {
         const val TAG = "PaperScreen"

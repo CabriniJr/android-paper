@@ -46,4 +46,47 @@
     <string name="page_turn_service">PaperScreen virar página</string>
     <string name="page_turn_summary">Pisca a tela como e-ink quando uma tela nova abre.</string>
     <string name="page_turn_description">Só escuta qual tela está aberta, para piscar quando ela muda. Nunca lê o conteúdo da tela.</string>
+
+    <string name="section_focus">Foco</string>
+    <string name="block_shorts">Bloquear vídeos curtos</string>
+    <string name="block_shorts_hint">Fecha os Shorts do YouTube e os Reels do Instagram assim que abrem, deixando o resto desses apps funcionando (mensagens, vídeos normais), e bloqueia TikTok e Kwai inteiros.</string>
+    <string name="shorts_blocked">Vídeos curtos estão bloqueados</string>
+    <string name="choose_blocked">Escolher apps bloqueados</string>
+    <string name="no_blocked_apps">Nenhum app bloqueado.</string>
+    <string name="unlock_time">Liberar por</string>
+    <string name="unlock_hint">Um app bloqueado mostra uma tela de pausa no lugar. Depois de esperar 10 segundos, dá para liberá-lo por esse tempo; depois ele volta a ser bloqueado.</string>
+    <plurals name="minutes">
+        <item quantity="one">%1$d minuto</item>
+        <item quantity="other">%1$d minutos</item>
+    </plurals>
+
+    <string name="section_home">Tela inicial</string>
+    <string name="home_hint">Uma tela inicial mínima: hora, data e até dez apps favoritos escritos por extenso, com todo o resto a uma busca de distância. Sem ícones, notificações nos ícones ou widgets. Segure um nome para reorganizar ou bloquear.</string>
+    <string name="use_as_home">Usar como tela inicial</string>
+    <string name="change_home">Trocar app de tela inicial</string>
+
+    <string name="all_apps">Todos os apps</string>
+    <string name="search_apps">Buscar apps</string>
+    <string name="no_favourites">Segure um app em Todos os apps para adicioná-lo aqui.</string>
+    <string name="blocked_label">%1$s · bloqueado</string>
+    <string name="move_up">Mover para cima</string>
+    <string name="move_down">Mover para baixo</string>
+    <string name="add_favourite">Adicionar à tela inicial</string>
+    <string name="remove_favourite">Remover da tela inicial</string>
+    <string name="block_app">Bloquear</string>
+    <string name="unblock_app">Desbloquear</string>
+    <string name="app_info">Informações do app</string>
+
+    <string name="pause_title">%1$s está bloqueado</string>
+    <string name="pause_question">Para que você ia abrir?</string>
+    <string name="pause_go_home">Voltar ao início</string>
+    <string name="pause_wait">Espere %1$d s</string>
+    <plurals name="pause_use_anyway">
+        <item quantity="one">Usar por %1$d minuto</item>
+        <item quantity="other">Usar por %1$d minutos</item>
+    </plurals>
+
+    <string name="focus_service">PaperScreen foco</string>
+    <string name="focus_summary">Bloqueia os apps e vídeos curtos que você escolheu.</string>
+    <string name="focus_description">Só recebe eventos dos apps que você bloqueou e de YouTube, Instagram e TikTok. No YouTube e no Instagram, procura o player de vídeos curtos pelo id para fechá-lo. Nada é guardado nem enviado para lugar nenhum.</string>
 </resources>

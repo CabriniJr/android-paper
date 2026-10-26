@@ -10,6 +10,14 @@
         android:name="android.permission.WRITE_SECURE_SETTINGS"
         tools:ignore="ProtectedPermissions" />
 
+    <!-- Package visibility (not a permission): lets the home screen and the blocker see launchable apps. -->
+    <queries>
+        <intent>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent>
+    </queries>
+
     <application
         android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
@@ -36,6 +44,34 @@
                 android:name="android.app.shortcuts"
                 android:resource="@xml/shortcuts" />
         </activity>
+
+        <!-- The optional minimal home screen; chosen as the default home app from settings. -->
+        <activity
+            android:name=".HomeActivity"
+            android:clearTaskOnLaunch="true"
+            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode"
+            android:excludeFromRecents="true"
+            android:exported="true"
+            android:launchMode="singleTask"
+            android:stateNotNeeded="true"
+            android:taskAffinity=""
+            android:theme="@style/Theme.PaperScreen.Home"
+            android:windowSoftInputMode="adjustResize|stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.HOME" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+
+        <!-- Shown instead of a blocked app; its own task, so finishing returns to the app. -->
+        <activity
+            android:name=".PauseActivity"
+            android:excludeFromRecents="true"
+            android:exported="false"
+            android:launchMode="singleInstance"
+            android:taskAffinity=""
+            android:theme="@style/Theme.PaperScreen.Home" />
 
         <!-- Toggles and closes; the target of the launcher shortcut. -->
         <activity
@@ -79,6 +115,21 @@
             <meta-data
                 android:name="android.accessibilityservice"
                 android:resource="@xml/page_turn_service" />
+        </service>
+
+        <!-- Focus blocking. Only the system can bind it. -->
+        <service
+            android:name=".FocusService"
+            android:exported="true"
+            android:label="@string/focus_service"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/focus_service" />
         </service>
 
     </application>

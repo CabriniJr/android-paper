@@ -2,4 +2,5 @@
 <resources>
     <color name="icon_background">#E8E2D6</color>
     <color name="icon_foreground">#3A3835</color>
+    <color name="home_ink">#333333</color>
 </resources>

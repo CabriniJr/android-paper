@@ -1,11 +1,21 @@
 # PaperScreen
 
+Turns an Android phone into a calm, good "dumb phone": it looks like e-ink, opens on a page
+of words instead of a grid of icons, and keeps short videos and the apps you choose out of
+reach. Three independent parts:
+
+- **Paper mode** – the e-ink look (below).
+- **Focus** – blocks short videos and chosen apps.
+- **Home screen** – a minimal, text-only launcher.
+
+## Paper mode
+
 Makes an OLED Android phone look and feel like an e-ink reader, at practically zero cost: no
 screen capture, no per-pixel work, nothing running in the background. Paper mode is built
 entirely from Android's own display pipeline, which SurfaceFlinger applies to every frame in
 the same pass that composes the screen.
 
-## What paper mode does
+### What it does
 
 | Effect | How | Option |
 |---|---|---|
@@ -26,7 +36,33 @@ once per class whether it's an activity, and shows a plain coloured window for t
 the flash. It turns its own event delivery off while the flash isn't wanted, and PaperScreen
 switches the service itself on and off with the option.
 
-## Toggling it
+## Focus
+
+`FocusService` (an accessibility service PaperScreen switches on only while something is
+blocked) does two things:
+
+- **Block short videos:** closes YouTube Shorts and Instagram Reels with Back as soon as their
+  full-screen player shows, so search, messages and normal videos keep working, and treats
+  short-video-only apps (TikTok, TikTok Lite, Kwai) as blocked apps. The players are found by
+  view id (`FocusRules.SHORT_VIDEO_VIEWS`); if an app update renames them, update that list.
+- **Blocked apps** (picked in settings, or long-press an app on the home screen): opening one
+  brings up a pause screen instead – "What did you open it for?" – with *Back to home*, and
+  *Use it for N minutes* (1–15, default 5) only after a 10-second wait. When the time runs
+  out, the pause screen returns at the app's next change.
+
+It stays light: the system only delivers events from the watched apps, coalesced to one per
+type every 300 ms, and window content is only queried inside YouTube and Instagram. It's
+friction, not a lock: everything can be undone from the settings page.
+
+## Home screen
+
+`HomeActivity`, chosen from *Use as home screen*: the time and date (`TextClock`, no code
+running), up to ten favourite apps as words, and *All apps*, a searchable list (accents and
+case ignored, Go opens the top result). Long-press a favourite to move or remove it; long-press
+any app to add it to the home screen, block or unblock it, or open its app info. Blocked apps
+are marked. No icons, badges, widgets or wallpaper. Back and Home return to the home page.
+
+## Toggling paper mode
 
 - **Quick Settings tile** "Paper mode": tap to toggle, long-press for the settings. On Android
   13+, the app's *Add Quick Settings tile* button adds it for you.
@@ -56,7 +92,7 @@ from the run's *Artifacts*. Locally (JDK 17 and an Android SDK with platform 34)
 
 ```sh
 ./gradlew assembleRelease      # app/build/outputs/apk/release/app-release.apk (minified, ~tens of KB)
-./gradlew testDebugUnitTest    # SystemTweaks: apply/restore, ordering, persistence
+./gradlew testDebugUnitTest    # SystemTweaks, FocusRules, Favourites
 ```
 
 The release build is signed with the debug key so it installs directly; use your own key
@@ -74,6 +110,10 @@ before distributing it. No libraries: framework APIs and the Kotlin stdlib only.
 | `PaperTileService.kt` | Quick Settings tile |
 | `ToggleActivity.kt` | Invisible toggle for the launcher shortcut |
 | `PageTurnService.kt` | Optional page-turn flash |
+| `FocusRules.kt` | What to block and how (pure, unit-tested) |
+| `FocusService.kt` | Focus blocking |
+| `PauseActivity.kt` / `Unlocks.kt` | The pause screen, and apps let through for a while |
+| `HomeActivity.kt` / `AppCatalog.kt` / `Favourites.kt` | The home screen |
 
 ## Limitations
 

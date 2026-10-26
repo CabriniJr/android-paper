@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  The home screen: a page of text. The home view (clock, date, favourites) and the app list
+  take turns filling it.
+-->
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true">
+
+    <LinearLayout
+        android:id="@+id/home"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="32dp"
+        android:paddingVertical="24dp">
+
+        <!-- TextClock keeps itself up to date; no code runs for it. -->
+        <TextClock
+            android:id="@+id/clock"
+            style="@style/HomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:format12Hour="h:mm"
+            android:format24Hour="HH:mm"
+            android:textSize="72sp" />
+
+        <TextClock
+            android:id="@+id/date"
+            style="@style/HomeText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:alpha="0.6"
+            android:textSize="18sp" />
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:fillViewport="true"
+            android:scrollbars="none">
+
+            <LinearLayout
+                android:id="@+id/favourites"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:orientation="vertical"
+                android:paddingVertical="16dp" />
+        </ScrollView>
+
+        <TextView
+            android:id="@+id/open_drawer"
+            style="@style/HomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:alpha="0.5"
+            android:paddingVertical="12dp"
+            android:text="@string/all_apps"
+            android:textSize="17sp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/drawer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingHorizontal="24dp"
+        android:paddingTop="16dp"
+        android:visibility="gone">
+
+        <EditText
+            android:id="@+id/search"
+            style="@style/HomeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/search_apps"
+            android:imeOptions="actionGo"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:textSize="20sp" />
+
+        <ListView
+            android:id="@+id/app_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:divider="@null"
+            android:fastScrollEnabled="true" />
+    </LinearLayout>
+</FrameLayout>

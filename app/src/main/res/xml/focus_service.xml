@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Events only from the watched apps (the list here is replaced at runtime by the blocked apps
+  and the short-video apps), coalesced to one per type every 300 ms. Window content is read
+  only to find short-video players by view id.
+-->
+<accessibility-service xmlns:android="http://schemas.android.com/apk/res/android"
+    android:accessibilityEventTypes="typeWindowStateChanged|typeWindowContentChanged"
+    android:accessibilityFeedbackType="feedbackGeneric"
+    android:accessibilityFlags="flagReportViewIds"
+    android:canRetrieveWindowContent="true"
+    android:description="@string/focus_description"
+    android:notificationTimeout="300"
+    android:packageNames="com.google.android.youtube,com.instagram.android,com.zhiliaoapp.musically,com.ss.android.ugc.trill"
+    android:settingsActivity="com.paperscreen.SettingsActivity"
+    android:summary="@string/focus_summary" />
