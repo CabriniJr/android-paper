@@ -1,124 +1,38 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!--
-      Settings: a light page like the home screen, whatever the system theme. The colours
-      here are the untinted starting point; SettingsPage recolours everything in code from
-      the warmth setting, and sets the home screen's font.
-    -->
-    <style name="Theme.PaperScreen" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:colorPrimary">@color/ink</item>
-        <item name="android:colorAccent">@color/ink</item>
-        <item name="android:colorControlActivated">@color/ink</item>
-        <item name="android:colorControlNormal">@color/ink_secondary</item>
-        <item name="android:colorControlHighlight">@color/highlight</item>
-        <item name="android:windowBackground">@color/paper</item>
-        <item name="android:statusBarColor">@color/paper</item>
-        <item name="android:navigationBarColor">@color/paper</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:textColorPrimary">@color/ink</item>
-        <item name="android:textColorSecondary">@color/ink_secondary</item>
-        <item name="android:alertDialogTheme">@style/Theme.PaperScreen.Dialog</item>
-        <item name="android:timePickerDialogTheme">@style/Theme.PaperScreen.Dialog</item>
-    </style>
+    <!-- The system's own theme (light or dark), so the page looks like part of Settings. -->
+    <style name="Theme.PaperScreen" parent="@android:style/Theme.DeviceDefault.DayNight" />
 
-    <style name="Theme.PaperScreen.Dialog" parent="android:Theme.Material.Light.Dialog.Alert">
-        <item name="android:colorAccent">@color/ink</item>
-        <item name="android:colorControlActivated">@color/ink</item>
-        <item name="android:colorControlHighlight">@color/highlight</item>
-        <item name="android:textColorPrimary">@color/ink</item>
-        <item name="android:textColorSecondary">@color/ink_secondary</item>
-    </style>
-
-    <!-- The home screen is always a white page, whatever the system theme. -->
-    <style name="Theme.PaperScreen.Home" parent="android:Theme.Material.Light.NoActionBar">
-        <item name="android:windowBackground">@android:color/white</item>
-        <item name="android:windowShowWallpaper">false</item>
-        <item name="android:statusBarColor">@android:color/white</item>
-        <item name="android:navigationBarColor">@android:color/white</item>
-        <item name="android:windowLightStatusBar">true</item>
-        <item name="android:windowLightNavigationBar">true</item>
-        <item name="android:colorAccent">@color/home_ink</item>
-        <item name="android:colorControlActivated">@color/home_ink</item>
-        <item name="android:colorControlHighlight">#14333333</item>
-        <item name="android:textColorPrimary">@color/home_ink</item>
-    </style>
-
-    <style name="HomeText">
-        <item name="android:fontFamily">serif</item>
-        <item name="android:textColor">@color/home_ink</item>
-    </style>
-
-    <!-- A one-pixel hairline. -->
-    <style name="HomeRule">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
-        <item name="android:background">@color/home_rule</item>
-    </style>
-
-    <!--
-      Settings page. android:tag names each view's role, which SettingsPage uses to colour it:
-      header, summary, hint, value, note, rule, options, box, button, link.
-    -->
-
-    <!-- The master switch: the page's title. -->
     <style name="MasterSwitch">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:minHeight">56dp</item>
-        <item name="android:textSize">28sp</item>
-        <item name="android:textColor">@color/ink</item>
-        <item name="android:fontFamily">serif</item>
+        <item name="android:minHeight">64dp</item>
+        <item name="android:textSize">24sp</item>
     </style>
 
-    <!-- The one-line summary of the current setup under the master switch. -->
-    <style name="Summary">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/ink_secondary</item>
-        <item name="android:tag">summary</item>
-    </style>
-
-    <!-- Small, uppercase, letterspaced group label. -->
-    <style name="SectionHeader">
+    <style name="Header">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:layout_marginTop">24dp</item>
-        <item name="android:layout_marginBottom">6dp</item>
-        <item name="android:textSize">12sp</item>
-        <item name="android:textAllCaps">true</item>
-        <item name="android:letterSpacing">0.14</item>
-        <item name="android:textColor">@color/ink_label</item>
+        <item name="android:layout_marginBottom">4dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/colorAccent</item>
         <item name="android:accessibilityHeading">true</item>
-        <item name="android:tag">header</item>
     </style>
 
-    <!-- Hairline between sections. -->
-    <style name="SectionRule">
+    <style name="Option">
         <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">1px</item>
-        <item name="android:layout_marginTop">20dp</item>
-        <item name="android:background">@color/rule</item>
-        <item name="android:tag">rule</item>
-    </style>
-
-    <!-- A slider's label (left) and value (right). -->
-    <style name="SectionLabel">
-        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_weight">1</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/ink</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
-    <style name="SectionValue">
-        <item name="android:layout_width">wrap_content</item>
+    <style name="Hint">
+        <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
         <item name="android:textSize">14sp</item>
-        <item name="android:textColor">@color/ink_secondary</item>
-        <item name="android:fontFeatureSettings">tnum</item>
-        <item name="android:tag">value</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
     </style>
 
     <style name="SliderRow">
@@ -129,72 +43,24 @@
         <item name="android:orientation">horizontal</item>
     </style>
 
-    <style name="Hint">
-        <item name="android:layout_width">match_parent</item>
+    <style name="Label">
+        <item name="android:layout_width">0dp</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginBottom">6dp</item>
-        <item name="android:textSize">13sp</item>
-        <item name="android:lineSpacingMultiplier">1.15</item>
-        <item name="android:textColor">@color/ink_secondary</item>
-        <item name="android:tag">hint</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:textSize">17sp</item>
     </style>
 
-    <style name="FeatureSwitch">
-        <item name="android:layout_width">match_parent</item>
+    <style name="Value">
+        <item name="android:layout_width">wrap_content</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">6dp</item>
-        <item name="android:minHeight">48dp</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/ink</item>
-    </style>
-
-    <!-- Indented group of a feature's sub-settings, hidden while the feature is off. -->
-    <style name="FeatureOptions">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginBottom">4dp</item>
-        <item name="android:orientation">vertical</item>
-        <item name="android:paddingStart">16dp</item>
-        <item name="android:clipToPadding">false</item>
-        <item name="android:background">@drawable/options_rule</item>
-        <item name="android:tag">options</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
+        <item name="android:fontFeatureSettings">tnum</item>
     </style>
 
     <style name="Slider">
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">wrap_content</item>
-        <item name="android:layout_marginTop">2dp</item>
-        <item name="android:layout_marginBottom">10dp</item>
-        <!-- Room for the knob at either end, cancelled by the margins so the track still
-             lines up with the text above it. -->
-        <item name="android:layout_marginStart">-12dp</item>
-        <item name="android:layout_marginEnd">-12dp</item>
-        <item name="android:paddingStart">12dp</item>
-        <item name="android:paddingEnd">12dp</item>
-    </style>
-
-    <!-- A text-only button, like a link in a book. -->
-    <style name="TextButton" parent="@android:style/Widget.Material.Button.Borderless">
-        <item name="android:layout_width">wrap_content</item>
-        <item name="android:layout_height">wrap_content</item>
-        <item name="android:minWidth">0dp</item>
-        <item name="android:paddingStart">0dp</item>
-        <item name="android:paddingEnd">0dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/ink</item>
-        <item name="android:tag">link</item>
-    </style>
-
-    <!-- A full-width button with a hairline border. -->
-    <style name="OutlineButton" parent="@android:style/Widget.Material.Button.Borderless">
-        <item name="android:layout_width">match_parent</item>
-        <item name="android:layout_height">52dp</item>
-        <item name="android:textAllCaps">false</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textColor">@color/ink</item>
-        <item name="android:stateListAnimator">@null</item>
-        <item name="android:tag">button</item>
+        <item name="android:layout_marginVertical">4dp</item>
     </style>
 </resources>

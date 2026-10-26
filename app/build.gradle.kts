@@ -9,14 +9,17 @@ android {
 
     defaultConfig {
         applicationId = "com.paperscreen"
-        minSdk = 34
+        minSdk = 31
         targetSdk = 34
-        versionCode = 1
-        versionName = "1.0"
+        versionCode = 2
+        versionName = "2.0"
     }
 
     buildTypes {
         release {
+            // Signed with the debug key, so the release APK installs straight away when
+            // sideloaded. Use your own key before publishing it anywhere.
+            signingConfig = signingConfigs.getByName("debug")
             isMinifyEnabled = true
             isShrinkResources = true
             proguardFiles(
@@ -37,9 +40,6 @@ android {
 }
 
 dependencies {
-    // The only library: RecyclerView's ItemTouchHelper, for dragging favourites on the home
-    // screen. Everything else uses Android framework APIs (plus the Kotlin stdlib).
-    // 1.3.x is the newest line that builds against compileSdk 34.
-    implementation("androidx.recyclerview:recyclerview:1.3.2")
+    // No libraries: framework APIs and the Kotlin stdlib only, to keep the APK tiny.
     testImplementation("junit:junit:4.13.2")
 }

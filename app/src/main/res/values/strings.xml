@@ -1,155 +1,53 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">PaperScreen</string>
+    <string name="paper_mode">Paper mode</string>
 
-    <string name="master_toggle">PaperScreen</string>
+    <string name="status_on">On: the screen looks like e-ink paper.</string>
+    <string name="status_off">Off.</string>
+    <string name="status_setup">Needs a one-time setup first (below).</string>
+    <string name="needs_setup">Do the one-time setup first</string>
 
-    <string name="summary_running">Filtering active</string>
-    <string name="summary_snoozed">Paused for a few minutes</string>
-    <string name="summary_stopped">Off</string>
-    <string name="summary_separator">" · "</string>
-    <string name="summary_custom">Custom %1$d ms</string>
-    <plurals name="summary_greys">
-        <item quantity="one">%1$d grey</item>
-        <item quantity="other">%1$d greys</item>
-    </plurals>
-    <string name="summary_smooth">Smooth greys</string>
-    <string name="summary_warmth">Warmth %1$d</string>
-    <string name="summary_night_warmth">Night warmth %1$d</string>
+    <string name="setup_title">One-time setup</string>
+    <string name="setup_text">Paper mode works through Android\'s own display settings (greyscale, Night Light, Extra dim), so it costs no CPU or battery. Changing them needs a permission only a computer can grant, once. With USB debugging on, run:</string>
+    <string name="copy_command">Copy command</string>
+    <string name="setup_wireless">No computer? On the phone itself, Wireless debugging plus an app like Shizuku or LADB can run the same command. It survives reboots and app updates.</string>
 
-    <string name="section_display">Display</string>
-    <string name="section_refresh">Refresh</string>
-    <string name="section_about">About PaperScreen</string>
-    <string name="about_description">E-ink display simulation</string>
-    <string name="about_version">Version %1$s</string>
-    <string name="support_development">Support development</string>
-    <!-- Placeholder: replace with the real support page. -->
-    <string name="support_url" translatable="false">https://example.com/paperscreen/support</string>
-    <string name="support_open_failed">No app can open web links.</string>
-    <string name="reset_all">Reset all to defaults</string>
-    <string name="reset_all_title">Reset all settings?</string>
-    <string name="reset_all_message">Every setting on this page goes back to its default. Your home screen favourites, and whether PaperScreen is on or is your home screen, stay as they are.</string>
-    <string name="reset_all_confirm">Reset</string>
+    <string name="section_look">Look</string>
+    <string name="warmth">Paper warmth</string>
+    <string name="warmth_off">Neutral</string>
+    <string name="warmth_hint">Tints the grey with Night Light, from neutral to sepia. Neutral leaves Night Light alone.</string>
+    <string name="dim">Dim whites</string>
+    <string name="dim_hint">Uses Extra dim to take the glow off white, so it reads as paper rather than a light.</string>
+    <string name="dim_level">Dimming</string>
+    <string name="crisp_text">Crisp text</string>
+    <string name="crisp_text_hint">High-contrast text: solid black type, like e-ink.</string>
 
-    <string name="service_missing">Turn on the PaperScreen accessibility service to use PaperScreen.</string>
-    <string name="grant">Set up</string>
-
-    <string name="refresh_interval">Refresh interval</string>
-    <string name="refresh_interval_value">%1$s · %2$d ms</string>
-    <string name="preset_option">%1$s — %2$d ms</string>
-    <string name="preset_standard">Standard</string>
-    <string name="preset_reading">Reading</string>
-    <string name="preset_slow">Slow</string>
-    <string name="preset_eink">E-ink</string>
-    <string name="preset_custom">Custom</string>
-    <string name="custom_interval">Custom interval</string>
-    <string name="custom_interval_value">%1$d ms</string>
-    <string name="interval_hint">The minimum time between refreshes. Standard is the fastest Android allows: about three captures of each window per second.</string>
-    <string name="warmth">Warmth</string>
-    <string name="warmth_value">%1$d</string>
-    <string name="warmth_hint">Cool grey ↔ warm amber</string>
-    <string name="contrast">Contrast</string>
-    <string name="contrast_value">%1$d · ink %2$d / paper %3$d</string>
-    <string name="grey_levels">Grey levels</string>
-    <string name="grey_levels_value">%1$d</string>
-    <string name="full_refresh_every">Full refresh every</string>
-    <plurals name="full_refresh_every_value">
-        <item quantity="one">%1$d refresh</item>
-        <item quantity="other">%1$d refreshes</item>
-    </plurals>
-    <string name="posterize">Posterization</string>
-    <string name="posterize_hint">Steps the greys into a few distinct levels, like e-ink. Off keeps smooth, continuous greyscale.</string>
-    <string name="ghosting">Ghosting</string>
-    <string name="ghosting_hint">Partial refreshes leave a brief afterimage of what changed. Off swaps changed areas cleanly.</string>
-    <string name="ghost_opacity">Ghost opacity</string>
-    <string name="ghost_opacity_value">%1$d%%</string>
-    <string name="ghost_fade">Fade duration</string>
-    <string name="ghost_fade_value">%1$d ms</string>
-    <string name="transition_flash">E-ink transitions</string>
-    <string name="transition_flash_hint">Each area a partial refresh rewrites flashes inverted for a moment before it settles, like the pixels of a real e-ink panel. Also in Quick Settings.</string>
-    <string name="transition_flash_duration">Transition flash</string>
-    <string name="transition_flash_value">%1$d ms</string>
-    <string name="tile_transition_flash">E-ink transitions</string>
-    <string name="full_refresh">Full refresh</string>
-    <string name="full_refresh_hint">Every so often the whole screen flashes inverted to clear leftovers, like an e-ink page turn. Off makes every refresh partial.</string>
+    <string name="section_motion">Motion</string>
+    <string name="no_animations">No animations</string>
+    <string name="no_animations_hint">Screens change in one step, the way e-ink does. Also makes the phone feel faster.</string>
+    <string name="page_flash">Page-turn flash</string>
+    <string name="page_flash_hint">When a new screen opens, it flashes black and white first, like an e-ink full refresh. Turns on PaperScreen\'s accessibility service, which only listens for screen changes.</string>
     <string name="flash_duration">Flash duration</string>
-    <string name="flash_duration_value">%1$d ms</string>
-    <string name="refresh_on_change">Refresh only when the screen changes</string>
-    <string name="refresh_on_change_hint">Only captures the screen when apps report a change. Turn off to capture on every interval, which also catches video and games.</string>
-    <string name="hold_to_preview">Hold to preview</string>
-    <string name="preview_hint">Applies the current filter to this screen while held.</string>
 
-    <string name="service_dialog_title">Turn on the PaperScreen service</string>
-    <string name="service_dialog_message">PaperScreen draws its filtered screen as an accessibility overlay. That\'s the only kind of overlay Android lets be fully opaque while your taps still reach the apps underneath. The same service captures each window underneath the overlay, so the overlay never has to get out of the way. Captures stay on your phone.\n\nOn the next screen, open Installed apps (or Downloaded apps), choose PaperScreen, and turn it on. Then come back here.</string>
-    <string name="service_dialog_restricted">\n\nIf the switch is greyed out as a \"restricted setting\", open App info for PaperScreen, tap ⋮ in the top corner, choose \"Allow restricted settings\", and try again.</string>
-    <string name="open_settings">Open settings</string>
-    <string name="not_now">Not now</string>
-    <string name="start_timeout">PaperScreen couldn\'t start — try again</string>
-    <string name="start_failed">Couldn\'t start PaperScreen. Make sure its accessibility service is on, then try again.</string>
+    <string name="section_shortcuts">Quick access</string>
+    <string name="shortcuts_hint">Toggle from the Quick Settings tile (long-press it for this page), or long-press the app icon for a Toggle shortcut you can also pin to the home screen.</string>
+    <string name="add_tile">Add Quick Settings tile</string>
+    <string name="tile_already_added">The tile is already in Quick Settings</string>
+    <string name="footer">Turning paper mode off puts back every system setting it changed, exactly as it was. Nothing keeps running in the background.</string>
 
-    <string name="reset_to_default">Reset %1$s to default</string>
-    <string name="warmth_controlled">Controlled by Night warmth</string>
-    <string name="warmth_override_title">Night warmth is on</string>
-    <string name="warmth_override_message">Warmth is following the Night warmth schedule. Turn Night warmth off and go back to setting warmth by hand?</string>
-    <string name="warmth_override_confirm">Use manual warmth</string>
+    <string name="percent">%1$d%%</string>
+    <string name="milliseconds">%1$d ms</string>
 
-    <string name="section_night">Night warmth</string>
-    <string name="night_warmth">Night warmth</string>
-    <string name="night_warmth_hint">Warmer at night, cooler by day. While on, it sets the warmth instead of the Warmth slider.</string>
-    <string name="night_schedule">Schedule</string>
-    <string name="night_schedule_sun">Sunrise/sunset</string>
-    <string name="night_schedule_custom">Custom</string>
-    <string name="night_starts">Night starts</string>
-    <string name="night_ends">Night ends</string>
-    <string name="day_warmth">Day warmth</string>
-    <string name="night_warmth_level">Night warmth</string>
-    <string name="night_transition">Transition</string>
-    <string name="night_transition_hint">Shifts warmth gradually over 30 minutes around each changeover instead of switching at once.</string>
-    <string name="night_status_night_light">Following Night Light\'s sunrise/sunset schedule. Now: warmth %1$d.</string>
-    <string name="night_status_sun">Sunset %1$s, sunrise %2$s (estimated for %3$s). Now: warmth %4$d.</string>
-    <string name="night_status_polar">No sunrise or sunset today at %1$s. Now: warmth %2$d.</string>
-    <string name="night_status_custom">Now: warmth %1$d.</string>
+    <string name="tile_on">On</string>
+    <string name="tile_off">Off</string>
+    <string name="tile_setup">Tap to set up</string>
+    <string name="toast_on">Paper mode on</string>
+    <string name="toast_off">Paper mode off</string>
+    <string name="shortcut_toggle">Toggle paper mode</string>
+    <string name="shortcut_toggle_short">Toggle</string>
 
-    <string name="section_home">Home screen</string>
-    <string name="home_screen">Use as home screen</string>
-    <string name="home_screen_hint">A page-style home screen: clock, date, up to ten favourites and an app drawer, all as text. Long-press an app in the drawer to add it to your favourites. On the home screen, long-press a favourite and drag to reorder it, or release for more options. Turning this off opens the system\'s default home app setting.</string>
-    <string name="home_label">PaperScreen Home</string>
-    <string name="clock_24h">24-hour clock</string>
-    <string name="clock_24h_hint">Follows your phone\'s setting until you change it here.</string>
-    <string name="clock_size">Clock size</string>
-    <string name="clock_size_small">Small</string>
-    <string name="clock_size_medium">Medium</string>
-    <string name="clock_size_large">Large</string>
-    <string name="show_date">Show date</string>
-    <string name="show_seconds">Show seconds</string>
-    <string name="home_font">Font</string>
-    <string name="font_serif">Serif</string>
-    <string name="font_sans">Sans-serif</string>
-    <string name="font_mono">Monospace</string>
-    <string name="home_search_hint">Search apps</string>
-    <string name="home_index_description">Alphabet index. Tap a letter to jump to it.</string>
-    <string name="home_favourites_empty">No favourites yet.\nLong-press an app in the list to add one.</string>
-    <string name="home_favourite_description">%1$s, favourite</string>
-    <string name="menu_add_favourite">Add to favourites</string>
-    <string name="menu_remove_favourite">Remove from favourites</string>
-    <string name="menu_app_info">App info</string>
-    <string name="menu_move_top">Move to top</string>
-    <string name="menu_move_bottom">Move to bottom</string>
-    <string name="home_app_info_failed">Couldn\'t open app info for %1$s</string>
-    <string name="home_launch_failed">Couldn\'t open %1$s</string>
-
-    <string name="secure_app_notice">Secure app detected — overlay paused</string>
-
-    <string name="notification_channel">PaperScreen status</string>
-    <string name="notification_channel_description">Shown while PaperScreen is filtering your screen, with buttons to pause or stop it.</string>
-    <string name="notification_title">PaperScreen is on</string>
-    <string name="notification_text">Tap to adjust</string>
-    <string name="notification_snoozed">Paused until %1$s</string>
-    <string name="action_stop">Stop</string>
-    <string name="action_snooze">Pause 5 min</string>
-    <string name="action_resume">Resume</string>
-
-    <string name="accessibility_summary">Shows your screen in e-ink style</string>
-    <string name="accessibility_description">PaperScreen redraws your screen in the style of an e-ink display, redrawing only what changes and occasionally clearing the screen with a full refresh. It uses this service to draw a full-screen overlay that your taps pass through, and to take a screenshot of each window underneath it, which it filters and shows on the overlay. It reads the window list only to know what to capture, and doesn\'t read or change anything inside apps. Captures stay on your phone.</string>
-
+    <string name="page_turn_service">PaperScreen page turn</string>
+    <string name="page_turn_summary">Flashes the screen like e-ink when a new screen opens.</string>
+    <string name="page_turn_description">Listens only for which screen is open, to flash when it changes. It never reads what\'s on screen.</string>
 </resources>

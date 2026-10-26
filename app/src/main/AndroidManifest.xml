@@ -1,20 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android">
-
-    <!-- For the status notification with Stop / Pause buttons. -->
-    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!--
-      Package visibility (not a permission): lets the home screen list launchable apps.
+      Lets paper mode write Android's display settings (greyscale, Night Light, Extra dim,
+      animation scales). Not grantable from the phone's UI: granted once over adb.
     -->
-    <queries>
-        <intent>
-            <action android:name="android.intent.action.MAIN" />
-            <category android:name="android.intent.category.LAUNCHER" />
-        </intent>
-    </queries>
+    <uses-permission
+        android:name="android.permission.WRITE_SECURE_SETTINGS"
+        tools:ignore="ProtectedPermissions" />
 
     <application
+        android:allowBackup="false"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher"
@@ -24,58 +21,41 @@
         <activity
             android:name=".SettingsActivity"
             android:exported="true"
+            android:label="@string/paper_mode"
             android:launchMode="singleTop">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+            <!-- Long-pressing the Quick Settings tile opens this page. -->
+            <intent-filter>
+                <action android:name="android.service.quicksettings.action.QS_TILE_PREFERENCES" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.app.shortcuts"
+                android:resource="@xml/shortcuts" />
         </activity>
 
-        <!-- The optional home screen; chosen as the default launcher from settings. -->
+        <!-- Toggles and closes; the target of the launcher shortcut. -->
         <activity
-            android:name=".HomeActivity"
-            android:clearTaskOnLaunch="true"
-            android:configChanges="orientation|screenSize|screenLayout|smallestScreenSize|keyboard|keyboardHidden|navigation|uiMode"
+            android:name=".ToggleActivity"
             android:excludeFromRecents="true"
             android:exported="true"
-            android:label="@string/home_label"
-            android:launchMode="singleTask"
-            android:resumeWhilePausing="true"
-            android:stateNotNeeded="true"
+            android:noHistory="true"
             android:taskAffinity=""
-            android:theme="@style/Theme.PaperScreen.Home"
-            android:windowSoftInputMode="adjustResize|stateHidden">
+            android:theme="@android:style/Theme.NoDisplay">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-                <category android:name="android.intent.category.HOME" />
+                <action android:name="com.paperscreen.TOGGLE" />
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
 
-        <!--
-          Owns the per-window capture pipeline and its TYPE_ACCESSIBILITY_OVERLAY window.
-          Only the system can bind it (BIND_ACCESSIBILITY_SERVICE).
-        -->
         <service
-            android:name=".PaperScreenAccessibilityService"
+            android:name=".PaperTileService"
             android:exported="true"
-            android:label="@string/app_name"
-            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
-            <intent-filter>
-                <action android:name="android.accessibilityservice.AccessibilityService" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.accessibilityservice"
-                android:resource="@xml/accessibility_service_config" />
-        </service>
-
-        <!-- Quick Settings tile for e-ink transitions; only System UI can bind it. -->
-        <service
-            android:name=".TransitionTileService"
-            android:exported="true"
-            android:icon="@drawable/ic_notification"
-            android:label="@string/tile_transition_flash"
+            android:icon="@drawable/ic_paper"
+            android:label="@string/paper_mode"
             android:permission="android.permission.BIND_QUICK_SETTINGS_TILE">
             <intent-filter>
                 <action android:name="android.service.quicksettings.action.QS_TILE" />
@@ -86,9 +66,20 @@
                 android:value="true" />
         </service>
 
-        <receiver
-            android:name=".NotificationActionReceiver"
-            android:exported="false" />
+        <!-- The optional page-turn flash. Only the system can bind it. -->
+        <service
+            android:name=".PageTurnService"
+            android:exported="true"
+            android:label="@string/page_turn_service"
+            android:permission="android.permission.BIND_ACCESSIBILITY_SERVICE">
+            <intent-filter>
+                <action android:name="android.accessibilityservice.AccessibilityService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.accessibilityservice"
+                android:resource="@xml/page_turn_service" />
+        </service>
 
     </application>
 </manifest>

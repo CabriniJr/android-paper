@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Long-press the app icon: toggle paper mode without opening the app. -->
+<shortcuts xmlns:android="http://schemas.android.com/apk/res/android">
+    <shortcut
+        android:enabled="true"
+        android:icon="@drawable/ic_paper_shortcut"
+        android:shortcutId="toggle"
+        android:shortcutLongLabel="@string/shortcut_toggle"
+        android:shortcutShortLabel="@string/shortcut_toggle_short">
+        <intent
+            android:action="com.paperscreen.TOGGLE"
+            android:targetClass="com.paperscreen.ToggleActivity"
+            android:targetPackage="com.paperscreen" />
+    </shortcut>
+</shortcuts>

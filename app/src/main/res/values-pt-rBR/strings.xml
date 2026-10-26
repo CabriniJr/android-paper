@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="paper_mode">Modo papel</string>
+
+    <string name="status_on">Ligado: a tela parece papel e-ink.</string>
+    <string name="status_off">Desligado.</string>
+    <string name="status_setup">Precisa de uma configuração única antes (abaixo).</string>
+    <string name="needs_setup">Faça a configuração única antes</string>
+
+    <string name="setup_title">Configuração única</string>
+    <string name="setup_text">O modo papel usa as próprias configurações de tela do Android (escala de cinza, Luz noturna, Escurecer mais), então não gasta CPU nem bateria. Alterá-las exige uma permissão que só um computador concede, uma vez. Com a depuração USB ligada, rode:</string>
+    <string name="copy_command">Copiar comando</string>
+    <string name="setup_wireless">Sem computador? No próprio celular, a Depuração por Wi-Fi com um app como Shizuku ou LADB roda o mesmo comando. Vale depois de reiniciar e de atualizar o app.</string>
+
+    <string name="section_look">Aparência</string>
+    <string name="warmth">Tom do papel</string>
+    <string name="warmth_off">Neutro</string>
+    <string name="warmth_hint">Tinge o cinza com a Luz noturna, de neutro a sépia. Neutro não mexe na Luz noturna.</string>
+    <string name="dim">Escurecer brancos</string>
+    <string name="dim_hint">Usa o Escurecer mais para tirar o brilho do branco, que passa a parecer papel e não uma lâmpada.</string>
+    <string name="dim_level">Escurecimento</string>
+    <string name="crisp_text">Texto nítido</string>
+    <string name="crisp_text_hint">Texto em alto contraste: letras pretas sólidas, como no e-ink.</string>
+
+    <string name="section_motion">Movimento</string>
+    <string name="no_animations">Sem animações</string>
+    <string name="no_animations_hint">As telas mudam de uma vez, como no e-ink. O celular também parece mais rápido.</string>
+    <string name="page_flash">Flash de virar página</string>
+    <string name="page_flash_hint">Quando uma tela nova abre, ela pisca preto e branco antes, como o refresh completo do e-ink. Liga o serviço de acessibilidade do PaperScreen, que só escuta trocas de tela.</string>
+    <string name="flash_duration">Duração do flash</string>
+
+    <string name="section_shortcuts">Acesso rápido</string>
+    <string name="shortcuts_hint">Ligue e desligue pelo bloco das Configurações rápidas (segure-o para abrir esta página), ou segure o ícone do app para o atalho Alternar, que também dá para fixar na tela inicial.</string>
+    <string name="add_tile">Adicionar bloco às Configurações rápidas</string>
+    <string name="tile_already_added">O bloco já está nas Configurações rápidas</string>
+    <string name="footer">Desligar o modo papel devolve cada configuração do sistema que ele mudou, exatamente como estava. Nada fica rodando em segundo plano.</string>
+
+    <string name="tile_on">Ligado</string>
+    <string name="tile_off">Desligado</string>
+    <string name="tile_setup">Toque para configurar</string>
+    <string name="toast_on">Modo papel ligado</string>
+    <string name="toast_off">Modo papel desligado</string>
+    <string name="shortcut_toggle">Alternar modo papel</string>
+    <string name="shortcut_toggle_short">Alternar</string>
+
+    <string name="page_turn_service">PaperScreen virar página</string>
+    <string name="page_turn_summary">Pisca a tela como e-ink quando uma tela nova abre.</string>
+    <string name="page_turn_description">Só escuta qual tela está aberta, para piscar quando ela muda. Nunca lê o conteúdo da tela.</string>
+</resources>
