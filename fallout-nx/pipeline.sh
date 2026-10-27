@@ -3,6 +3,7 @@
 #
 #   ./pipeline.sh doctor                 check the tools on this machine
 #   ./pipeline.sh deps                   fetch the pinned toolchain (deps.lock) into work/
+#   ./pipeline.sh refs                   fetch the pinned reference repositories (refs.lock) into work/refs/ (read only)
 #   ./pipeline.sh sdk                    build the host code generator (rexglue) from the SDK fork
 #   ./pipeline.sh extract  <game> <iso>  extract your disc image into work/assets/<game>/game_root
 #   ./pipeline.sh identify <game>        hash default.xex and check it against games/<game>/versions.toml
@@ -78,12 +79,12 @@ cmd_doctor() {
 }
 
 # --- deps ---------------------------------------------------------------------------------------------------------
-cmd_deps() {
-  mkdir -p "$WORK"
+fetch_lock() {  # fetch_lock <lock file> <destination folder>
   local name url rev dest
+  mkdir -p "$2"
   while read -r name url rev _; do
     [[ -z "$name" || "$name" == \#* ]] && continue
-    dest="$WORK/$name"
+    dest="$2/$name"
     if [[ ! -d "$dest/.git" ]]; then
       say "clone $name @ ${rev:0:12}"
       git init -q "$dest"
@@ -96,7 +97,13 @@ cmd_deps() {
     else
       say "$name @ ${rev:0:12} (up to date)"
     fi
-  done < "$LOCK"
+  done < "$1"
+}
+
+cmd_refs() { fetch_lock "$ROOT/refs.lock" "$WORK/refs"; }
+
+cmd_deps() {
+  fetch_lock "$LOCK" "$WORK"
   # The SDK fork only carries the third-party files it changed; the rest comes from ReXGlue v0.10.0's submodules.
   if [[ ! -f "$SA2/sdk/thirdparty/.fnx_fetched" ]]; then
     say "fetch the SDK's third-party sources (ReXGlue v0.10.0 submodules)"
@@ -206,6 +213,6 @@ cmd_all() {
 
 stage="${1:-}"; shift || true
 case "$stage" in
-  doctor|deps|sdk|extract|identify|codegen|audit|status|all) "cmd_$stage" "$@" ;;
-  *) sed -n '2,15p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
+  doctor|deps|refs|sdk|extract|identify|codegen|audit|status|all) "cmd_$stage" "$@" ;;
+  *) sed -n '2,16p' "$0" | sed 's/^# \{0,1\}//'; exit 1 ;;
 esac

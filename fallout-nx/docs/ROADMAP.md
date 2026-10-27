@@ -8,8 +8,10 @@ Cada marco tem um critério de saída verificável. Não se avança com o anteri
 - [x] Etapas `doctor`, `deps`, `sdk`, `extract`, `identify`, `codegen`, `audit`, `status`
 - [x] Toolchain fixado (`deps.lock`: sa2-nx @ `adf3a4e`, ReXGlue 0.10.0)
 - [x] Manifestos de FO3 e FNV no formato do sa2-nx, sem dados do jogo
+- [x] Base de pesquisa (`docs/research/`) e repositórios de referência (`refs.lock`, etapa `refs` testada)
 - [ ] Rodar `deps` + `sdk` numa máquina com clang 20 e registrar os tempos aqui
-- [ ] `identify` nos seus discos; registrar as builds em `games/*/versions.toml`
+- [ ] `identify` nos seus discos; registrar as builds em `games/*/versions.toml` (P-01)
+- Roteiro: [SESSAO-DESKTOP.md](SESSAO-DESKTOP.md)
 
 **Saída:** `./pipeline.sh status fo3` com tudo marcado até `codegen`.
 

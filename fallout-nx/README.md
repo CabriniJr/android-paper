@@ -50,6 +50,7 @@ C++ do jogo
 ```sh
 ./pipeline.sh doctor                      # confere as ferramentas
 ./pipeline.sh deps                        # baixa o toolchain fixado em deps.lock para work/
+./pipeline.sh refs                        # baixa os repositórios de referência (refs.lock) para work/refs/
 ./pipeline.sh sdk                         # compila o gerador de código (rexglue)
 ./pipeline.sh extract fo3 ~/Fallout3.iso  # extrai seu disco
 ./pipeline.sh identify fo3                # identifica a build do executável
@@ -71,13 +72,17 @@ Cada etapa pode ser rodada de novo sozinha. O jogo é `fo3` ou `fnv`.
 | Caminho | Conteúdo |
 |---|---|
 | `pipeline.sh` | as etapas |
-| `deps.lock` | repositórios e commits fixados |
+| `deps.lock` | toolchain fixado (repositórios e commits) |
+| `refs.lock` | repositórios de referência, só para leitura (`./pipeline.sh refs`) |
+| `CLAUDE.md` | regras e mapa para sessões do Claude |
 | `tools/identify.py` | identifica o `default.xex` (SHA-256, title id, versão, base, entry point) |
 | `games/<jogo>/<jogo>_manifest.toml` | manifesto do gerador de código |
 | `games/<jogo>/overrides.toml` | correções feitas à mão, cada uma com sua evidência |
 | `games/<jogo>/codegen_flavor.toml` | opções de geração; vazio até o jogo rodar certo no PC |
 | `games/<jogo>/versions.toml` | builds conhecidas do executável |
-| `docs/` | roadmap e trilha de estudo |
+| `docs/research/` | base de pesquisa: precedentes, o alvo, símbolos, hardware, método, perguntas abertas |
+| `docs/SESSAO-DESKTOP.md` | roteiro da primeira sessão com os discos |
+| `docs/ROADMAP.md`, `docs/gpu-study.md` | marcos e trilha de estudo |
 | `work/` | tudo o que é gerado (ignorado pelo git) |
 
 ## Regras do projeto

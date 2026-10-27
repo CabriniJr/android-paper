@@ -1,0 +1,13 @@
+# Reference repositories for research (./pipeline.sh refs): read, never built or linked. <name> <git url> <commit>.
+# masseffect-nx: the closest precedent (AAA 2007 disc game, open areas, streaming): docs/ is required reading.
+masseffect-nx https://github.com/nebadasSwifty/masseffect-nx.git 650e14ef109fb0d39bd68ba8d7af61fe459265b8
+# nfsmw-nx: origin of the Switch layer, the NVK build and PGO; docs/platform-notes.md, toolchain.md, measuring.md.
+nfsmw-nx https://github.com/StevensND/nfsmw-nx.git be2d4c67ab42d6d629746a01dbf03cef824c8d2d
+# sc5p2-nx: a second game built on sa2-nx (app_sc5p2/): the template for adding our games/ apps.
+sc5p2-nx https://github.com/BiroGrafx/sc5p2-nx.git 1e13bc814883a8ff613d43170088462b42c1988c
+# xNVSE: reverse-engineered FNV PC engine (class layouts, RTTI list, script command table). Names and layouts only.
+xnvse https://github.com/xNVSE/NVSE.git 0ccd23ad885ddae533c1790a3fc56cd073e38de3
+# Xenia Canary game patches: confirmed PPC addresses for sibling Bethesda titles (Oblivion 425307D1, Skyrim 425307E6).
+xenia-game-patches https://github.com/xenia-canary/game-patches.git fe957a050e37f5a1e3f485ca43c2e37ee2a9c92d
+# Upstream ReXGlue: the wiki (CLI, config file, runtime) documents the generator this fork is based on.
+rexglue-sdk https://github.com/rexglue/rexglue-sdk.git c94f5ebdcb3c9d1a460ca48e04f9758448f8d518
