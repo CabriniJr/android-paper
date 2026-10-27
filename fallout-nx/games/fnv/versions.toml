@@ -1,0 +1,10 @@
+# Builds of Fallout: New Vegas's default.xex this port knows. Overrides only hold for the build they were found in.
+# ./pipeline.sh identify fnv prints the entry to add for your dump.
+title_id = "425307E6"   # to confirm against your disc's XEX header
+# code_range = "82xxxxxx:82xxxxxx"   # code section lo:hi (hex), from the codegen log; used by ./pipeline.sh audit
+
+# [[build]]
+# name = "<edition / region / title update>"
+# sha256 = "<from identify>"
+# version = "<from identify>"
+# media_id = "<from identify>"

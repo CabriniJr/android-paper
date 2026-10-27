@@ -1,0 +1,25 @@
+# ReXGlue recompilation manifest for Fallout: New Vegas (Xbox 360 disc, default.xex). Run through ./pipeline.sh codegen fnv.
+# Format: sa2-nx's app/sa2_manifest.toml (SDK fork, ReXGlue 0.10.0).
+#
+# Paths are relative to this file and point into work/ (git-ignored): your own extracted disc, and the generated C++.
+# Fill in the executable's facts here after ./pipeline.sh identify fnv (image base, entry point, XDK version).
+
+[project]
+name = "fnv"
+sdk_version = "0.10.0"
+game_root = "../../work/assets/fnv/game_root"
+
+[entrypoint]
+file_path = "../../work/assets/fnv/game_root/default.xex"
+out_directory_path = "../../work/fnv/generated/default"
+
+# overrides.toml       written by hand: what automatic discovery misses, each entry with its evidence
+# codegen_flavor.toml  code generation options; empty ("classic") until the game boots correctly on the PC
+includes = ["overrides.toml", "codegen_flavor.toml"]
+
+# Extra code modules (guest DLLs the game loads with XexLoadImage) go here as [[modules]] once found:
+# [[modules]]
+# guest_path = "<path inside the disc>.xex"
+# file_path = "../../work/assets/fnv/game_root/<path inside the disc>.xex"
+# out_directory_path = "../../work/fnv/generated/<name>"
+# includes = ["overrides_<name>.toml", "codegen_flavor.toml"]

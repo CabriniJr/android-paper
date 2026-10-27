@@ -1,0 +1,3 @@
+# Code generation flavour for Fallout: New Vegas: "classic" (empty) until the game boots and plays correctly on the PC.
+# Then the options are turned on one at a time, each checked (sa2-nx docs/porting-guide.md 9.1; sc5p2-nx's
+# app_sc5p2/codegen_flavor.toml is a worked example: cr/ctr/xer as locals first, then non_volatile_as_local).

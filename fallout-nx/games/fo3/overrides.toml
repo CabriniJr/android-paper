@@ -1,0 +1,4 @@
+# Hand-written corrections for Fallout 3's default.xex. Rule: every entry carries its evidence in a comment (the address,
+# what references it, which log line or tool found it), so a real fix can be told from a guess.
+# Formats: [functions], [[switch_tables]], [[invalid_instructions]], [[midasm_hook]], setjmp_address/longjmp_address
+# (ReXGlue wiki: "rexglue CLI Configuration File"). Reports to start from: work/fo3/audit/ (./pipeline.sh audit fo3).

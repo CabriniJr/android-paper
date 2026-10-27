@@ -1,0 +1,8 @@
+# Everything made from the game or fetched by ./pipeline.sh: never committed.
+/work/
+games/*/generated/
+*.xex
+*.xexp
+*.iso
+*.bin
+*.nro

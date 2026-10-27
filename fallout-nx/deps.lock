@@ -1,0 +1,6 @@
+# Pinned toolchain for ./pipeline.sh deps: <name> <git url> <commit>. Bump one line at a time, then re-run
+# deps, sdk and codegen, and note why in the commit message.
+#
+# sa2-nx: the ReXGlue v0.10.0 SDK fork with the Horizon (Switch) layer, the code generator steps, the analysis tools,
+# XenosRecomp (shaders/) and the native Vulkan renderer (app/src/me). Same base as nfsmw-nx, masseffect-nx, sc5p2-nx.
+sa2-nx https://github.com/ChanseyIsTheBest/sa2-nx.git adf3a4eee524dcca5cd7c1b42454ddb8a09124a1
